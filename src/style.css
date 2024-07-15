@@ -1,0 +1,157 @@
+/* Router link */
+.addmywishlist.e-icons::before {
+  content: '\e7f9';
+}
+.removemywishlist.e-icons::before {
+  content: '\e934';
+}
+.analysis.e-icons::before {
+  content: '\e831';
+}
+
+.nav {
+  display: flex;
+  /* justify-content: space-around; Distribute items evenly */
+  background-color: #082338;
+  padding: 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #f3f3f3;
+  padding: 10px 15px;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  color: #0080ff;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #0080dd;
+  text-decoration: none;
+}
+/* marquee */
+
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  /* background: #333; */
+  background: #00264d;
+  font-size: 24px;
+  padding: 10px 0;
+}
+
+.marquee {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 35s linear infinite;
+  font-size: 15px;
+}
+.marquee .company {
+  padding: 0 25px;
+}
+.marquee .value {
+  padding: 0 3px 0 7px;
+}
+.company.posvalue {
+  color: #00ff55;
+  font-weight: bold;
+}
+.company.negvalue {
+  color: #ff3740;
+  font-weight: bold;
+}
+.company .pos {
+  vertical-align: text-top;
+}
+.company .neg {
+  vertical-align: text-bottom;
+}
+.company.posvalue .pos.e-icons::before {
+  content: '\e82a';
+}
+.company.negvalue .neg.e-icons::before {
+  content: '\e83d';
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* main content */
+
+.main-content {
+  min-height: 600px;
+  background-color: #003366;
+  color: #ffffff;
+  padding: 10px;
+}
+
+/* All Stocks */
+
+.stock-content-area {
+  padding-left: 10px;
+  min-height: 450px;
+}
+.dd-container {
+  padding-bottom: 10px;
+}
+.e-sidebar {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  background: #303030;
+}
+.e-grid td.e-rowcell.e-pos:not(.e-editedbatchcell):not(.e-updatedtd),
+.e-grid.e-gridhover
+  .e-row:not(.e-disable-gridhover):not(.e-editedrow):not(.e-detailrow):hover
+  .e-rowcell.e-pos:not(.e-cellselectionbackground):not(.e-active):not(
+    .e-updatedtd
+  ):not(.e-indentcell),
+.e-grid td.e-rowcell.e-pos .e-icons {
+  color: #00a653;
+}
+
+.e-grid td.e-rowcell.e-neg:not(.e-editedbatchcell):not(.e-updatedtd),
+.e-grid.e-gridhover
+  .e-row:not(.e-disable-gridhover):not(.e-editedrow):not(.e-detailrow):hover
+  .e-rowcell.e-neg:not(.e-cellselectionbackground):not(.e-active):not(
+    .e-updatedtd
+  ):not(.e-indentcell),
+.e-grid td.e-rowcell.e-neg .e-icons {
+  color: #ff3740;
+}
+
+/* Gainers Losers */
+
+.sections,
+.section1,
+.section2 {
+  display: inline-block;
+}
+
+.section1,
+.section2 {
+  width: 50%;
+  padding: 20px 20px 0;
+}
+
+.section1 {
+  float: left;
+}
+
+.section2 {
+  /* padding-left: 10px; */
+}
+
+/* stock analysis */
+
+.chart-container {
+  width: 700px;
+}
