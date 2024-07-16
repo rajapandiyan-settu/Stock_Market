@@ -12,11 +12,12 @@ import {
   QueryCellInfoEventArgs,
 } from '@syncfusion/ej2-react-grids';
 import { isNullOrUndefined } from '@syncfusion/ej2-base';
-export default function Screener() {
+export default function SmartStockPicks() {
   let qbObj = useRef(null);
   let gridObj = useRef(null);
   const [gridData, setGridData] = useState(
     new DataManager({
+      // url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
       url: 'http://localhost:62869/api/StockData',
       adaptor: new UrlAdaptor(),
       // offline: true,

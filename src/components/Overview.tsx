@@ -16,13 +16,11 @@ import {
   QueryCellInfoEventArgs,
   ContextMenu,
   CommandColumn,
-  CommandClickEventArgs,
-  dataBound
+  CommandClickEventArgs
 } from '@syncfusion/ej2-react-grids';
-import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import {
-  DropDownListComponent,
-  ChangeEventArgs,
+  MultiSelectComponent,
+  MultiSelectChangeEventArgs,
 } from '@syncfusion/ej2-react-dropdowns';
 import {
   SidebarComponent
@@ -30,17 +28,21 @@ import {
 import { ListViewComponent, SelectEventArgs } from '@syncfusion/ej2-react-lists';
 import { StockDetails, ListData } from '../data';
 import { useNavigate } from 'react-router-dom';
-export default function AllStocks(props: { changeMarquee: Function, myStockDm: DataManager }) {  
+export default function Overview(props: { changeMarquee: Function, myStockDm: DataManager }) {  
   const navigate = useNavigate();
   const gridIns = useRef<GridComponent>(null);
+  let sidebarobj = useRef<SidebarComponent>(null);
+  let listviewObj = useRef<ListViewComponent>(null);
+  let ddObj = useRef<MultiSelectComponent>(null);
   const timeIntervalRef = useRef(null);
   const [allStocks, setAllStocks] = useState({ isDataReady: false, data: [] });
   const [ddQuery, setDdQuery] = useState(new Query());
   const [gridQuery, setGridQuery] = useState(new Query());
+  let listFields = { id: 'id', text: 'text' };
 
   const timer = () => {
     if (gridIns) {
-      dm.executeQuery(new Query()).then((e: any) => {
+      dm.executeQuery(new Query().addParams("isRefresh", "true")).then((e: any) => {
         props.changeMarquee(e.result.slice(0, 10));
         setAllStocks({ isDataReady: true, data: e.result });
       });
@@ -56,11 +58,9 @@ export default function AllStocks(props: { changeMarquee: Function, myStockDm: D
     };
   }, []);
 
-  let sidebarobj = useRef(null);
-  let ddObj = useRef(null);
-  let listFields = { id: 'id', text: 'text' };
   const [dm, setDm] = useState(
     new DataManager({
+      // url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
       url: 'http://localhost:62869/api/StockData',
       adaptor: new UrlAdaptor(),
     })
@@ -101,6 +101,7 @@ export default function AllStocks(props: { changeMarquee: Function, myStockDm: D
   };
 
   const OnSelect = (args: SelectEventArgs) => {
+    if (listviewObj.current) {
     let query;
     if (args.text === 'All Sectors') {
       query = new Query();
@@ -110,11 +111,19 @@ export default function AllStocks(props: { changeMarquee: Function, myStockDm: D
     (ddObj.current as any).value = '';
     setDdQuery(query);
     setGridQuery(query);
+  }
   };
 
-  const onChange = (args: ChangeEventArgs) => {
-    if (args.value) {
-      setGridQuery(new Query().where('CompanyName', 'equal', args.value as string));
+  const onChange = (args: MultiSelectChangeEventArgs) => {
+    if (args.value.length) {
+      let predicates: Predicate[] = [];
+      for (let i = 0; i < args.value.length; i++) {
+        predicates.push(new Predicate('CompanyName', 'equal', args.value[i] as string));
+      }
+      let query: Query = new Query().where(Predicate.or(predicates));
+      setGridQuery(query);
+    } else {
+      setGridQuery(new Query());
     }
   };
 
@@ -160,22 +169,26 @@ export default function AllStocks(props: { changeMarquee: Function, myStockDm: D
       clearInterval(timeIntervalRef.current);
     }
   }
+  const actionComplete = (args: any) => {
+    debugger;
+    (document.getElementById('listSidebarList') as any).ej2_instances[0].selectItem({id: '1', text: 'All Sectors'});
+    // listviewObj.current!.selectItem({id: '1', text: 'All Sectors'});
+  }
   return (
     <div>
       <div className="listmaincontent">
         <div className="stock-content-area">
           <div className="dd-container">
-            <DropDownListComponent
-              id="company"
-              ref={ddObj}
-              dataSource={dm}
-              fields={{ text: 'CompanyName', value: 'CompanyName' }}
-              query={ddQuery}
-              change={onChange}
-              placeholder="Select a company"
-              width={250}
-              popupHeight="220px"
-            />
+          <MultiSelectComponent
+          id="company"
+          dataSource={dm}
+          ref={ddObj}
+          fields={{ text: 'CompanyName', value: 'CompanyName' }}
+          query={ddQuery}
+          change={onChange}
+          placeholder="Select a company"
+          width={250}
+          popupHeight="220px"/>
           </div>
           {allStocks.isDataReady &&
             <GridComponent
@@ -189,10 +202,8 @@ export default function AllStocks(props: { changeMarquee: Function, myStockDm: D
               enableHover={false}
               commandClick={commandClick}
               destroyed={destroyed}
-            // selectionSettings={{ persistSelection: true }}
             >
               <ColumnsDirective>
-                {/* <ColumnDirective type="checkbox" width="100"></ColumnDirective> */}
                 <ColumnDirective
                   field="ID"
                   visible={false}
@@ -296,10 +307,12 @@ export default function AllStocks(props: { changeMarquee: Function, myStockDm: D
       >
         <ListViewComponent
           id="listSidebarList"
+          ref={listviewObj}
           dataSource={ListData}
           cssClass="e-template-list"
           fields={listFields}
           select={OnSelect}
+          actionComplete={actionComplete}
         ></ListViewComponent>
       </SidebarComponent>
     </div>

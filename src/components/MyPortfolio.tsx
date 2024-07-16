@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   DataManager,
   UrlAdaptor,
@@ -20,15 +20,38 @@ import {
 import { StockDetails } from '../data';
 import { useNavigate } from 'react-router-dom';
 
-export default function MyStocks(props: { myStockDm: DataManager}) {
+export default function MyPortfolio(props: { changeMarquee: Function, myStockDm: DataManager }) {
   const navigate = useNavigate();
-  var gridIns;
+  const myWishListGridIns = useRef<GridComponent>(null);
   const [stockData, setStockData] = useState({ isDataReady: false, data: [] });
   if (!stockData.isDataReady) {
-    props.myStockDm.executeQuery(props.myStockDm && (props.myStockDm as any).persistQuery && (props.myStockDm as any).persistQuery.queries ? (props.myStockDm as any).persistQuery : new Query() ).then((e: any) => {
+    let query = props.myStockDm && (props.myStockDm as any).persistQuery instanceof Query ? (props.myStockDm as any).persistQuery : new Query();
+    query.params = [];
+    props.myStockDm.executeQuery(query.addParams("isRefresh", "true")).then((e: any) => {
       setStockData({ isDataReady: true, data: e.result });
     });
   }
+  const timeIntervalRef = useRef(null);
+
+  const timer = () => {
+    if (myWishListGridIns) {
+      let query = props.myStockDm && (props.myStockDm as any).persistQuery instanceof Query ? (props.myStockDm as any).persistQuery : new Query();
+      query.params = [];
+      props.myStockDm.executeQuery(query.addParams("isRefresh", "true")).then((e: any) => {
+        props.changeMarquee(e.result.slice(0, 10));
+        setStockData({ isDataReady: true, data: e.result });
+      });
+    }
+  }
+
+  useEffect(() => {
+    timeIntervalRef.current = setInterval(timer, 1500) as any;
+    return () => {
+      if (timeIntervalRef.current) {
+        clearInterval(timeIntervalRef.current);
+      }
+    };
+  }, []);
 
   const queryCellInfo = (args: QueryCellInfoEventArgs) => {
     if (args.column!.field === 'Rating') {
@@ -62,7 +85,7 @@ export default function MyStocks(props: { myStockDm: DataManager}) {
       let myWishList = [];
       let predicates: Predicate[] = [];
       if (window.localStorage.myStock) {
-        let persistQuery = JSON.parse(window.localStorage.myStock);
+        let persistQuery = JSON.parse(window.localStorage.myStocks);
         if (persistQuery.queries) {
           for (let i = 0; i < persistQuery.queries.length; i++) {
             if (persistQuery.queries[i].fn === 'onWhere') {
@@ -84,18 +107,17 @@ export default function MyStocks(props: { myStockDm: DataManager}) {
           }
         }
       }
-      // if (myWishList.indexOf(args.rowData.CompanyName) === -1) {
-      //   myWishList.push(args.rowData.CompanyName);
-      // }
+      if (myWishList.length) {
       for (let i = 0; i < myWishList.length; i++) {
         predicates.push(new Predicate('CompanyName', 'equal', myWishList[i]));
       }
-      let query: Query = new Query().page(1, 8).where(Predicate.or(predicates));
-
+      let query: Query = new Query().where(Predicate.or(predicates));
       props.myStockDm.executeQuery(query).then((e: any) => {
-        window.localStorage.setItem('myStock', JSON.stringify(query));
+        (props.myStockDm as any).persistQuery = query;
+        props.myStockDm.setPersistData({} as any, 'myStocks', query);
         setStockData({ isDataReady: true, data: e.result });
       });
+    }
     }
     if (args.target!.querySelector('.analysis')) {
       navigate('/stock_analysis', {
@@ -104,27 +126,29 @@ export default function MyStocks(props: { myStockDm: DataManager}) {
     }
   }
 
+  const destroyed = () => {
+    // if (timeIntervalRef.current) {
+    //   clearInterval(timeIntervalRef.current);
+    // }
+  }
+
   return (
     <div>
-      {/* <ButtonComponent onClick={btnClick}>Refresh</ButtonComponent> */}
-
       <div className="listmaincontent">
         <div className="stock-content-area">
           {stockData.isDataReady && (
             <GridComponent
-              ref={(g) => (gridIns = g)}
+              ref={myWishListGridIns}
               dataSource={stockData.data}
-              // query={gridQuery}
               queryCellInfo={queryCellInfo}
               allowSorting={true}
               allowPaging={true}
               pageSettings={{ pageCount: 4, pageSize: 9 }}
               enableHover={false}
               commandClick={commandClick}
-              // selectionSettings={{ persistSelection: true }}
+              destroyed={destroyed}
             >
               <ColumnsDirective>
-                {/* <ColumnDirective type="checkbox" width="100"></ColumnDirective> */}
                 <ColumnDirective
                   field="ID"
                   visible={false}

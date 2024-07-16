@@ -153,5 +153,17 @@
 /* stock analysis */
 
 .chart-container {
-  width: 700px;
+  /* width: 700px; */
+}
+
+text#charts_ChartTitle {
+  fill: rgba(256, 256, 256, 1);
+}
+
+#chartsAxisLabels0 text {
+  fill: rgba(255, 255, 255, 0.87);
+}
+
+#chartsAxisLabels1 text {
+  fill: rgba(255, 255, 255, 0.87);
 }
