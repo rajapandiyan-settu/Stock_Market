@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { QueryBuilderComponent, RuleChangeEventArgs } from '@syncfusion/ej2-react-querybuilder';
-import { Query, DataManager, UrlAdaptor } from '@syncfusion/ej2-data';
+import { Query, DataManager, UrlAdaptor, Predicate } from '@syncfusion/ej2-data';
 import { StockDetails } from '../data';
 import {
   GridComponent,
   Page,
   Inject,
+  CommandColumn,
   ColumnsDirective,
   ColumnDirective,
   QueryCellInfoEventArgs,
+  CommandClickEventArgs
 } from '@syncfusion/ej2-react-grids';
 import { isNullOrUndefined } from '@syncfusion/ej2-base';
-export default function SmartStockPicks() {
+export default function SmartStockPicks(props: { myStockDm: DataManager }) {
+  const navigate = useNavigate();
   let qbObj = useRef(null);
   let gridObj = useRef(null);
   const [gridData, setGridData] = useState(
@@ -24,7 +28,7 @@ export default function SmartStockPicks() {
     })
   );
   const [gridQuery, setGridQuery] = useState(
-    new Query().where('CompanyName', 'equal', 'Tech Innovators Inc')
+    new Query().where('Last', 'greaterthan', 250)
   );
   const updateRule = (args: RuleChangeEventArgs) => {
     let predicate = (qbObj.current as any).getPredicate(args.rule);
@@ -44,8 +48,8 @@ export default function SmartStockPicks() {
       type: 'string',
       operators: [
         { key: 'equal', value: 'equal' },
-        { key: 'greaterthan', value: 'greaterthan' },
-        { key: 'lessthan', value: 'lessthan' },
+        { key: 'startswith', value: 'startswith' },
+        { key: 'contains', value: 'contains' },
       ],
     },
     {
@@ -78,17 +82,24 @@ export default function SmartStockPicks() {
         { key: 'lessthan', value: 'lessthan' },
       ],
     },
-    { field: 'Rating', label: 'Rating', type: 'string' },
+    {
+      field: 'Rating', label: 'Rating', type: 'string',
+      operators: [
+        { key: 'equal', value: 'equal' },
+        { key: 'startswith', value: 'startswith' },
+        { key: 'contains', value: 'contains' },
+      ]
+    },
   ];
   let importRules = {
     condition: 'or',
     rules: [
       {
-        label: 'Company',
-        field: 'CompanyName',
-        type: 'string',
-        operator: 'equal',
-        value: 'Tech Innovators Inc',
+        label: 'Last',
+        field: 'Last',
+        type: 'number',
+        operator: 'greaterthan',
+        value: 120,
       },
     ],
   };
@@ -118,6 +129,44 @@ export default function SmartStockPicks() {
       }
     }
   };
+
+  function commandClick(args: CommandClickEventArgs) {
+    if (args.target!.querySelector('.addmywishlist')) {
+      let myWishList = [];
+      let predicates: Predicate[] = [];
+      if (window.localStorage.myStocks) {
+        let persistQuery = JSON.parse(window.localStorage.myStocks);
+        if (persistQuery.queries) {
+          for (let i = 0; i < persistQuery.queries.length; i++) {
+            if (persistQuery.queries[i].fn === 'onWhere') {
+              for (
+                let j = 0;
+                j < persistQuery.queries[i].e.predicates.length;
+                j++
+              ) {
+                myWishList.push(persistQuery.queries[i].e.predicates[j].value);
+              }
+            }
+          }
+        }
+      }
+      if (myWishList.indexOf((args.rowData as StockDetails).CompanyName) === -1) {
+        myWishList.push((args.rowData as StockDetails).CompanyName);
+      }
+      for (let i = 0; i < myWishList.length; i++) {
+        predicates.push(new Predicate('CompanyName', 'equal', myWishList[i]));
+      }
+      let query: Query = new Query().where(Predicate.or(predicates));
+      (props.myStockDm as any).persistQuery = query;
+      props.myStockDm.setPersistData({} as any, 'myStocks', query);
+    }
+    if (args.target!.querySelector('.analysis')) {
+      navigate('/stock_analysis', {
+        state: { code: (args.rowData as StockDetails).CompanyName },
+      });
+    }
+  }
+
   return (
     <div className="control-pane">
       <div className="control-section qb-section">
@@ -140,6 +189,8 @@ export default function SmartStockPicks() {
                 query={gridQuery}
                 created={onGridCreated}
                 queryCellInfo={queryCellInfo}
+                commandClick={commandClick}
+                pageSettings={{pageSize: 10}}
               >
                 <ColumnsDirective>
                   <ColumnDirective
@@ -207,8 +258,28 @@ export default function SmartStockPicks() {
                     textAlign="Right"
                     width="90"
                   ></ColumnDirective>
+                  <ColumnDirective
+                    headerText=""
+                    commands={[
+                      {
+                        title: 'Add to Wishlist',
+                        buttonOption: {
+                          iconCss: 'addmywishlist e-icons',
+                          cssClass: 'e-flat',
+                        },
+                      },
+                      {
+                        title: 'Analysis',
+                        buttonOption: {
+                          iconCss: 'analysis e-icons',
+                          cssClass: 'e-flat',
+                        },
+                      },
+                    ]}
+                    width="120"
+                  ></ColumnDirective>
                 </ColumnsDirective>
-                <Inject services={[Page]} />
+                <Inject services={[Page, CommandColumn]} />
               </GridComponent>
             </div>
           </div>

@@ -25,7 +25,11 @@ export default function MyPortfolio(props: { changeMarquee: Function, myStockDm:
   const myWishListGridIns = useRef<GridComponent>(null);
   const [stockData, setStockData] = useState({ isDataReady: false, data: [] });
   if (!stockData.isDataReady) {
-    let query = props.myStockDm && (props.myStockDm as any).persistQuery instanceof Query ? (props.myStockDm as any).persistQuery : new Query();
+    let query = new Query();
+    if (props.myStockDm && (props.myStockDm as any).persistQuery && (props.myStockDm as any).persistQuery.queries && (props.myStockDm as any).persistQuery.queries.length) {
+      query.where((props.myStockDm as any).persistQuery.queries[0].e);
+
+    }
     query.params = [];
     props.myStockDm.executeQuery(query.addParams("isRefresh", "true")).then((e: any) => {
       setStockData({ isDataReady: true, data: e.result });
@@ -35,7 +39,11 @@ export default function MyPortfolio(props: { changeMarquee: Function, myStockDm:
 
   const timer = () => {
     if (myWishListGridIns) {
-      let query = props.myStockDm && (props.myStockDm as any).persistQuery instanceof Query ? (props.myStockDm as any).persistQuery : new Query();
+      let query = new Query();
+      if (props.myStockDm && (props.myStockDm as any).persistQuery && (props.myStockDm as any).persistQuery.queries && (props.myStockDm as any).persistQuery.queries.length) {
+        query.where((props.myStockDm as any).persistQuery.queries[0].e);
+  
+      }
       query.params = [];
       props.myStockDm.executeQuery(query.addParams("isRefresh", "true")).then((e: any) => {
         props.changeMarquee(e.result.slice(0, 10));
@@ -127,9 +135,9 @@ export default function MyPortfolio(props: { changeMarquee: Function, myStockDm:
   }
 
   const destroyed = () => {
-    // if (timeIntervalRef.current) {
-    //   clearInterval(timeIntervalRef.current);
-    // }
+    if (timeIntervalRef.current) {
+      clearInterval(timeIntervalRef.current);
+    }
   }
 
   return (

@@ -9,7 +9,7 @@ import {
 
 import {
   DataManager,
-  UrlAdaptor,
+  UrlAdaptor, Query, Predicate
 } from '@syncfusion/ej2-data';
 import Overview from './components/Overview';
 import MyPortfolio from './components/MyPortfolio';
@@ -20,16 +20,16 @@ import News from './components/News';
 import Announcement from './components/Announcement';
 import { StockDetails, marqueeData } from './data';
 import './style.css';
+
+const dm = new DataManager({
+  // url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
+  url: 'http://localhost:62869/api/StockData',
+  adaptor: new UrlAdaptor(),
+  enablePersistence: true,
+  id: 'myStocks',
+});
+
 export default function App() {
-  const [dm, setDm] = useState(
-    new DataManager({
-      // url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
-      url: 'http://localhost:62869/api/StockData',
-      adaptor: new UrlAdaptor(),
-      enablePersistence: true,
-      id: 'myStocks',
-    })
-  );
   const [marquee, setMarquee] = useState(marqueeData);
   const changeMarquee = (data: StockDetails[]) => {
     setMarquee(data);
@@ -75,7 +75,7 @@ export default function App() {
                   Stock Analysis
                 </NavLink>
                 <NavLink to="/climbers_fallers" className="nav-link">
-                Climbers/Fallers
+                  Climbers/Fallers
                 </NavLink>
                 <NavLink to="/trending_news" className="nav-link">
                   Trending News
@@ -94,7 +94,7 @@ export default function App() {
                 <Route path="/my_portfolio" element={<MyPortfolio changeMarquee={changeMarquee} myStockDm={dm} />} />
                 <Route path="/stock_analysis" element={<StockAnalysis />} />
                 <Route path="/climbers_fallers" element={<ClimbersFallers />} />
-                <Route path="/smart_stock_picks" element={<SmartStockPicks />} />
+                <Route path="/smart_stock_picks" element={<SmartStockPicks myStockDm={dm} />} />
                 <Route path="/trending_news" element={<News />} />
                 <Route path="/announcement" element={<Announcement />} />
               </Routes>

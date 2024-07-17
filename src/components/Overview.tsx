@@ -41,7 +41,7 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
   let listFields = { id: 'id', text: 'text' };
 
   const timer = () => {
-    if (gridIns) {
+    if (gridIns.current) {
       dm.executeQuery(new Query().addParams("isRefresh", "true")).then((e: any) => {
         props.changeMarquee(e.result.slice(0, 10));
         setAllStocks({ isDataReady: true, data: e.result });
@@ -170,7 +170,6 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
     }
   }
   const actionComplete = (args: any) => {
-    debugger;
     (document.getElementById('listSidebarList') as any).ej2_instances[0].selectItem({id: '1', text: 'All Sectors'});
     // listviewObj.current!.selectItem({id: '1', text: 'All Sectors'});
   }
@@ -232,7 +231,7 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
                   field="Last"
                   format="N2"
                   textAlign="Center"
-                  width="80"
+                  width="90"
                 ></ColumnDirective>
                 <ColumnDirective
                   field="ChangeInValue"
@@ -243,7 +242,7 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
                 ></ColumnDirective>
                 <ColumnDirective
                   field="ChangeInPercent"
-                  headerText="CHNG(%) 1D"
+                  headerText="CHNG (%)"
                   format="P2"
                   textAlign="Center"
                   width="100"
@@ -257,13 +256,13 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
                   field="High"
                   format="N2"
                   textAlign="Center"
-                  width="80"
+                  width="90"
                 ></ColumnDirective>
                 <ColumnDirective
                   field="Low"
                   format="N2"
                   textAlign="Center"
-                  width="80"
+                  width="90"
                 ></ColumnDirective>
                 <ColumnDirective
                   field="Volume"
@@ -288,10 +287,10 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
                       },
                     },
                   ]}
-                  width="120"
+                  width="110"
                 ></ColumnDirective>
               </ColumnsDirective>
-              <Inject services={[Page, Sort, ContextMenu, CommandColumn]} />
+              <Inject services={[Page, Sort, CommandColumn]} />
             </GridComponent>
           }
         </div>

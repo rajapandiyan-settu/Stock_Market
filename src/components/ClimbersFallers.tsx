@@ -45,8 +45,9 @@ export default function ClimbersFallers() {
     <div className="gainers-losers-content-area">
       <div className="sections">
         <div className="section1">
+          <div className='header'>Climbers:</div>
           <GridComponent
-            id="gainers"
+            id="climbers"
             dataSource={gridData}
             query={gainersQuery}
             queryCellInfo={queryCellInfo}
@@ -123,8 +124,9 @@ export default function ClimbersFallers() {
           </GridComponent>
         </div>
         <div className="section2">
+          <div className='header'>Fallers:</div>
           <GridComponent
-            id="losers"
+            id="fallers"
             dataSource={gridData}
             query={losersQuery}
             queryCellInfo={queryCellInfo}
