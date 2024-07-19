@@ -17,7 +17,7 @@ import StockAnalysis from './components/StockAnalysis';
 import ClimbersFallers from './components/ClimbersFallers';
 import SmartStockPicks from './components/SmartStockPicks';
 import News from './components/News';
-import Announcement from './components/Announcement';
+import KnowMore from './components/KnowMore';
 import { StockDetails, marqueeData } from './data';
 import './style.css';
 
@@ -80,8 +80,8 @@ export default function App() {
                 <NavLink to="/trending_news" className="nav-link">
                   Trending News
                 </NavLink>
-                <NavLink to="/announcement" className="nav-link">
-                  Announcement
+                <NavLink to="/know_more" className="nav-link">
+                Know More
                 </NavLink>
               </nav>
             </div>
@@ -96,7 +96,7 @@ export default function App() {
                 <Route path="/climbers_fallers" element={<ClimbersFallers />} />
                 <Route path="/smart_stock_picks" element={<SmartStockPicks myStockDm={dm} />} />
                 <Route path="/trending_news" element={<News />} />
-                <Route path="/announcement" element={<Announcement />} />
+                <Route path="/know_more" element={<KnowMore />} />
               </Routes>
             </div>
           </div>

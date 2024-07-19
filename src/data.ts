@@ -20,11 +20,10 @@ export let ListData: { id: string, text: string, isChecked?: boolean }[] = [
     { id: '5', text: 'Retail' },
     { id: '6', text: 'Manufacturing' },
     { id: '7', text: 'Energy' },
-    { id: '8', text: 'Consumer' },
-    { id: '9', text: 'Goods' },
-    { id: '10', text: 'Telecommunications' },
-    { id: '11', text: 'Transportation' },
-    { id: '12', text: 'Utilities' },
+    { id: '8', text: 'Consumer Goods' },
+    { id: '9', text: 'Telecommunications' },
+    { id: '10', text: 'Transportation' },
+    { id: '11', text: 'Utilities' },
 ];
 
 export let marqueeData: StockDetails[] = [

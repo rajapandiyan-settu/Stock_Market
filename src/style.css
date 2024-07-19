@@ -157,6 +157,15 @@
 
 /* stock analysis */
 
+.companydd-container {
+  padding-top: 5px;
+}
+.chartHeader {
+  padding: 10px 0 10px 0;
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
+}
 .chart-container {
   padding-top: 10px;
 }
@@ -171,4 +180,106 @@ text#stockchartdefault_ChartTitle {
 
 #stockchartdefault_stockChart_chartAxisLabels1 text {
   fill: rgba(255, 255, 255, 0.87);
+}
+
+/* News */
+
+.col-xs-4.col-sm-4.col-lg-4.col-md-4 {
+  padding: 15px;
+}
+
+.e-card .e-card-header .e-card-header-caption .e-card-header-title {
+  font-weight: bold;
+  color: rgba(0, 0, 0, .7);
+}
+.e-card {
+  border-radius: 10px;
+}
+.e-card .e-card-content {
+  color: #000
+}
+.e-card-content {
+  min-height: 120px;
+}
+
+.e-card.card1 {
+  background-color: #F5FFFA;
+}
+
+.e-card.card2 {
+  background-color: #AFEEEE;
+  /* background-color: #66B2FF; */
+}
+
+.e-card.card3 {
+  background-color: #FFFF99;
+}
+
+.e-card.card4 {
+  background-color: #99FF99;
+}
+.e-card.card5 {
+  background-color: #FFB6B6;
+}
+.e-card.card6 {
+  background-color: #E6E6FA;
+}
+
+.e-card .e-card-actions a, .e-card .e-card-actions a:hover {
+  background-color: rgb(103, 80, 164);
+  color: #fff;
+}
+
+/* Know More */
+
+.db-carousel-section .carousel-sample {
+  /* border: 1px solid #e5e5e5; */
+  border-radius: 0.5em;
+  margin: 0 auto 2em;
+  max-width: 1000px;
+  height: 550px;
+  padding-top: 10px;
+}
+
+.db-carousel {
+  background-color: inherit;
+  border-radius: 0.5em;
+}
+
+.db-carousel .e-carousel-items .e-carousel-item .card-title,
+.db-carousel .e-carousel-items .e-carousel-item .card-text {
+  opacity: 0;
+  text-align: justify;
+  transform: translateY(20px);
+}
+
+.db-carousel .e-carousel-items .e-carousel-item.e-active .card-title,
+.db-carousel .e-carousel-items .e-carousel-item.e-active .card-text {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.db-carousel .e-carousel-items .e-carousel-item .card-title {
+  font-size: 20px;
+  transition: transform 0.4s ease 0.2s;
+}
+
+.db-carousel .e-carousel-items .e-carousel-item .card-text {
+  font-size: 14px;
+  transition: transform 0.4s ease 0.2s;
+}
+
+.db-carousel .e-carousel-indicators {
+  height: 3em;
+}
+
+.db-carousel .e-carousel-indicators.e-default .e-indicator-bar .e-indicator div {
+  background-color: #e7e7e7;
+}
+
+@media screen and (max-width: 480px) {
+  .db-carousel-section .carousel-sample {
+      width: 100%;
+      height: 440px;
+  }
 }

@@ -197,7 +197,7 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
               queryCellInfo={queryCellInfo}
               allowSorting={true}
               allowPaging={true}
-              pageSettings={{ pageCount: 4, pageSize: 9 }}
+              pageSettings={{ pageCount: 4, pageSize: 10 }}
               enableHover={false}
               commandClick={commandClick}
               destroyed={destroyed}
