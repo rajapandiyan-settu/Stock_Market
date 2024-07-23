@@ -21,6 +21,8 @@ import {
 import {
   MultiSelectComponent,
   MultiSelectChangeEventArgs,
+  DropDownListComponent,
+  ChangeEventArgs,
 } from '@syncfusion/ej2-react-dropdowns';
 import {
   SidebarComponent
@@ -28,12 +30,13 @@ import {
 import { ListViewComponent, SelectEventArgs } from '@syncfusion/ej2-react-lists';
 import { StockDetails, ListData } from '../data';
 import { useNavigate } from 'react-router-dom';
-export default function Overview(props: { changeMarquee: Function, myStockDm: DataManager }) {  
+export default function Overview(props: { changeMarquee: Function, myStockDm: DataManager }) {
   const navigate = useNavigate();
   const gridIns = useRef<GridComponent>(null);
   let sidebarobj = useRef<SidebarComponent>(null);
   let listviewObj = useRef<ListViewComponent>(null);
   let ddObj = useRef<MultiSelectComponent>(null);
+  let sectorObj = useRef<DropDownListComponent>(null);
   const timeIntervalRef = useRef(null);
   const [allStocks, setAllStocks] = useState({ isDataReady: false, data: [] });
   const [ddQuery, setDdQuery] = useState(new Query());
@@ -101,14 +104,30 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
   };
 
   const OnSelect = (args: SelectEventArgs) => {
-    if (listviewObj.current) {
+    if (listviewObj.current && listviewObj.current.element && listviewObj.current.element.offsetWidth) {
     let query;
     if (args.text === 'All Sectors') {
       query = new Query();
     } else {
       query = new Query().where('Sector', 'equal', args.text);
     }
+    (sectorObj.current as any).value = args.text;
     (ddObj.current as any).value = '';
+    setDdQuery(query);
+    setGridQuery(query);
+  }
+  };
+  const onSectorChange = (args: ChangeEventArgs) => {
+    debugger;
+    if (sectorObj.current && sectorObj.current.element && sectorObj.current.element.offsetWidth > 0) {
+    let query;
+    if (args.value === 'All Sectors') {
+      query = new Query();
+    } else {
+      query = new Query().where('Sector', 'equal', args.value as string);
+    }
+    (ddObj.current as any).value = '';
+    (document.getElementById('listSidebarList') as any).ej2_instances[0].selectItem(args.itemData);
     setDdQuery(query);
     setGridQuery(query);
   }
@@ -178,6 +197,19 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
       <div className="listmaincontent">
         <div className="stock-content-area">
           <div className="dd-container">
+            <span className='sector-container'>
+          <DropDownListComponent
+              id="sectors"
+              ref={sectorObj}
+              dataSource={ListData}
+              value='All Sectors'
+              fields={{ text: 'text', value: 'text' }}
+              change={onSectorChange}
+              placeholder="Select a Sector"
+              width={170}
+              popupHeight="220px"
+            />
+            </span>
           <MultiSelectComponent
           id="company"
           dataSource={dm}

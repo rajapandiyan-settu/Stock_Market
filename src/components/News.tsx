@@ -13,12 +13,12 @@ const News = () => {
                     <div className="e-card-header">
                       <div className="e-card-header-caption">
                         <div className="e-card-header-title">
-                        Prime Tech Surges Amidst New AI Innovations
+                        New AI Innovations
                         </div>
                       </div>
                     </div>
                     <div className="e-card-content">
-                    Prime Tech saw a significant stock price increase today as it unveiled new AI-driven products and services. Investors are optimistic about the potential revenue growth these innovations could bring.
+                    Future technology relies heavily on AI, making it a cornerstone of innovation. Investing in AI-related companies offers significant potential for growth. These companies drive advancements across various industries.
                     </div>
                     <div className="e-card-actions">
                       <a href="https://ej2.syncfusion.com/" target="_blank" rel="noopener noreferrer">
@@ -32,12 +32,12 @@ const News = () => {
                     <div className="e-card-header">
                       <div className="e-card-header-caption">
                         <div className="e-card-header-title">
-                        Energy Systems Sees Decline Due to Global Oil Surplus
+                        Electric Vehicle Surge
                         </div>
                       </div>
                     </div>
                     <div className="e-card-content">
-                    The energy sector, including Energy Systems, experienced a downturn as a global surplus of oil has led to falling prices. The company reported lower than expected earnings for the quarter.
+                    Due to rising oil demand, sales of electric vehicles have surged. This shift reflects a growing preference for more sustainable energy sources. Consumers are increasingly choosing battery-powered cars to reduce fuel dependency.
                     </div>
                     <div className="e-card-actions">
                       <a href="https://ej2.syncfusion.com/" target="_blank" rel="noopener noreferrer">
@@ -51,12 +51,12 @@ const News = () => {
                     <div className="e-card-header">
                       <div className="e-card-header-caption">
                         <div className="e-card-header-title">
-                        Retail Enterprises Rallies Ahead of Strong Earnings Reports
+                        Rising Interest Rates
                         </div>
                       </div>
                     </div>
                     <div className="e-card-content">
-                    Retail Enterprises rallied today in anticipation of robust earnings reports. Analysts predict that consumer spending has remained strong, driving sales growth in the sector.
+                    Banks and finance companies have raised interest rates, leading to slower economic growth. Higher rates make borrowing more expensive, reducing consumer spending and business investments. This dampens economic activity and can stifle growth.
                     </div>
                     <div className="e-card-actions">
                       <a href="https://ej2.syncfusion.com/" target="_blank" rel="noopener noreferrer">
@@ -74,12 +74,12 @@ const News = () => {
                     <div className="e-card-header">
                       <div className="e-card-header-caption">
                         <div className="e-card-header-title">
-                        Health Plus Inc Gains on Positive Drug Trial Results
+                        Breakthrough Brain Drug
                         </div>
                       </div>
                     </div>
                     <div className="e-card-content">
-                    Health Plus Inc rose after announcing positive results from late-stage drug trials. The company is buoyed by the potential for new treatments to reach the market soon.
+                    A new medicine has been developed for brain-related issues. This innovative treatment targets neurological disorders with the potential to improve cognitive function. The medicine aims to enhance brain health and manage symptoms more effectively.
                     </div>
                     <div className="e-card-actions">
                       <a href="https://ej2.syncfusion.com/" target="_blank" rel="noopener noreferrer">
@@ -93,12 +93,12 @@ const News = () => {
                     <div className="e-card-header">
                       <div className="e-card-header-caption">
                         <div className="e-card-header-title">
-                        Finance Innovations Struggles as Interest Rates Rise
+                        Retail Earnings Surge
                         </div>
                       </div>
                     </div>
                     <div className="e-card-content">
-                    Finance Innovations was under pressure today as rising interest rates sparked concerns about slowing economic growth. The company saw declines in its stock prices.
+                    Retail enterprises are seeing their earnings increase day by day. This consistent growth is driven by strong consumer demand and effective business strategies. Enhanced customer experiences and diversified product offerings also contribute to this upward trend.
                     </div>
                     <div className="e-card-actions">
                       <a href="https://ej2.syncfusion.com/" target="_blank" rel="noopener noreferrer">
@@ -112,12 +112,12 @@ const News = () => {
                     <div className="e-card-header">
                       <div className="e-card-header-caption">
                         <div className="e-card-header-title">
-                        Global Manufacturing Recovers Amidst Supply Chain Improvements
+                        Automotive Stock Gains
                         </div>
                       </div>
                     </div>
                     <div className="e-card-content">
-                    The automotive sector, including Global Manufacturing, showed signs of recovery as improvements in supply chain logistics helped car manufacturers meet demand. The company's stock saw gains as production levels stabilized.
+                    The automotive sector is successfully meeting the rising demand, with car manufacturers ramping up production. As production levels stabilize, the company’s stock has experienced notable gains. 
                     </div>
                     <div className="e-card-actions">
                       <a href="https://ej2.syncfusion.com/" target="_blank" rel="noopener noreferrer">

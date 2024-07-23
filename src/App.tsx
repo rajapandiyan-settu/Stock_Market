@@ -6,7 +6,7 @@ import {
   Route,
   NavLink,
 } from 'react-router-dom';
-
+import { DropDownButtonComponent, ItemModel } from '@syncfusion/ej2-react-splitbuttons';
 import {
   DataManager,
   UrlAdaptor, Query, Predicate
@@ -29,10 +29,32 @@ const dm = new DataManager({
   id: 'myStocks',
 });
 
-export default function App() {
+  export default function App() {
   const [marquee, setMarquee] = useState(marqueeData);
   const changeMarquee = (data: StockDetails[]) => {
     setMarquee(data);
+  };
+
+  let items: ItemModel[] = [
+              { text: 'Overview' },
+              { text: 'My Portfolio' },
+              { text: 'Smart Stock Picks' },
+              { text: 'Stock Analysis' },
+              { text: 'Climbers/Fallers' },
+              { text: 'Trending News' },
+              { text: 'Know More' }
+  ];
+  const handleSelect = (args: any) => {
+    const item: any = items.find(i => i.text === args.item.text);
+    if (item) {
+      window.location.href = item.url;
+    }
+  };
+  
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
   };
   return (
     <div>
@@ -83,6 +105,41 @@ export default function App() {
                 <NavLink to="/know_more" className="nav-link">
                 Know More
                 </NavLink>
+                <div className="menu-container">
+        <button className="menu-button" onClick={toggleMenu}>
+        <div className="e-icons e-menu"></div>
+        </button>
+        <div className={`menu-popup ${isOpen ? 'open' : 'closed'}`}>
+                <NavLink to="/" className="nav-link menu-item"
+            onClick={() => setIsOpen(false)}>
+                  Overview
+                </NavLink>
+                <NavLink to="/my_portfolio" className="nav-link menu-item"
+            onClick={() => setIsOpen(false)}>
+                  My Portfolio
+                </NavLink>
+                <NavLink to="/smart_stock_picks" className="nav-link menu-item"
+            onClick={() => setIsOpen(false)}>
+                  Smart Stock Picks
+                </NavLink>
+                <NavLink to="/stock_analysis" className="nav-link menu-item"
+            onClick={() => setIsOpen(false)}>
+                  Stock Analysis
+                </NavLink>
+                <NavLink to="/climbers_fallers" className="nav-link menu-item"
+            onClick={() => setIsOpen(false)}>
+                  Climbers/Fallers
+                </NavLink>
+                <NavLink to="/trending_news" className="nav-link menu-item"
+            onClick={() => setIsOpen(false)}>
+                  Trending News
+                </NavLink>
+                <NavLink to="/know_more" className="nav-link menu-item"
+            onClick={() => setIsOpen(false)}>
+                Know More
+                </NavLink>
+        </div>
+      </div>
               </nav>
             </div>
             <div className="main-content">

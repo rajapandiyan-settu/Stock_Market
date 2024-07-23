@@ -15,7 +15,7 @@ export default function StockAnalysis() {
   let chartObj = useRef<StockChartComponent>(null);
   const company = location.state?.code
     ? location.state?.code
-    : 'Tech Innovators Inc';
+    : 'Techz Innovators Inc';
   const [chartData, setChartData] = useState({ isDataReady: false, data: [], CompanyName: '' });
   const [dm, setDm] = useState(
     new DataManager({

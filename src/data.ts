@@ -24,6 +24,7 @@ export let ListData: { id: string, text: string, isChecked?: boolean }[] = [
     { id: '9', text: 'Telecommunications' },
     { id: '10', text: 'Transportation' },
     { id: '11', text: 'Utilities' },
+    { id: '12', text: 'Banks' },
 ];
 
 export let marqueeData: StockDetails[] = [
