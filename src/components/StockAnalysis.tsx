@@ -19,8 +19,8 @@ export default function StockAnalysis() {
   const [chartData, setChartData] = useState({ isDataReady: false, data: [], CompanyName: '' });
   const [dm, setDm] = useState(
     new DataManager({
-      // url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
-      url: 'http://localhost:62869/api/StockData',
+      url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
+      // url: 'http://localhost:62869/api/StockData',
       adaptor: new UrlAdaptor(),
     })
   );

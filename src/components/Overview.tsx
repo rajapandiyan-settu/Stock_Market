@@ -63,8 +63,8 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
 
   const [dm, setDm] = useState(
     new DataManager({
-      // url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
-      url: 'http://localhost:62869/api/StockData',
+      url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
+      // url: 'http://localhost:62869/api/StockData',
       adaptor: new UrlAdaptor(),
     })
   );
@@ -189,8 +189,9 @@ export default function Overview(props: { changeMarquee: Function, myStockDm: Da
     }
   }
   const actionComplete = (args: any) => {
-    (document.getElementById('listSidebarList') as any).ej2_instances[0].selectItem({id: '1', text: 'All Sectors'});
-    // listviewObj.current!.selectItem({id: '1', text: 'All Sectors'});
+    if (listviewObj.current && listviewObj.current.element) {
+        (document.getElementById('listSidebarList') as any).ej2_instances[0].selectItem({ id: '1', text: 'All Sectors' });
+    }
   }
   return (
     <div>

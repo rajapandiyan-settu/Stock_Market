@@ -245,7 +245,11 @@ text#stockchartdefault_ChartTitle {
   padding: 15px;
 }
 
+.e-card .e-card-header {
+  padding: 18px 0 18px 16px;
+}
 .e-card .e-card-header .e-card-header-caption .e-card-header-title {
+  font-size: 14px;
   font-weight: bold;
   color: rgba(0, 0, 0, .7);
 }
@@ -284,6 +288,10 @@ text#stockchartdefault_ChartTitle {
 }
 .e-card.card6 {
   background-color: #F5FFFA;
+}
+
+.e-card .e-card-actions .e-card-btn, .e-card .e-card-actions a {
+  padding: 0 10px;
 }
 
 .e-card .e-card-actions a, .e-card .e-card-actions a:hover {
@@ -414,4 +422,19 @@ text#stockchartdefault_ChartTitle {
 .e-card-content {
   min-height: unset;
 }
+}
+
+/* Pager customization */
+
+.e-pager .e-pagercontainer .e-firstpage, .e-pager .e-pagercontainer .e-prevpage, .e-pager .e-pagercontainer .e-firstpagedisabled, .e-pager .e-pagercontainer .e-prevpagedisabled, .e-pager .e-pagercontainer .e-nextpage, .e-pager .e-pagercontainer .e-lastpage, .e-pager .e-pagercontainer .e-nextpagedisabled, .e-pager .e-pagercontainer .e-lastpagedisabled {
+  padding: 8px 9px 8px;
+  margin-right: 6px;
+  margin-left: 6px;
+}
+.e-pager .e-next.e-icons.e-icon-next.e-nextpagedisabled.e-disable, .e-pager .e-next.e-icons.e-icon-next.e-nextpage.e-pager-default {
+  margin-left: 6px;
+}
+.e-pager .e-numericitem {
+  margin-left: 2px;
+  margin-right: 2px;
 }

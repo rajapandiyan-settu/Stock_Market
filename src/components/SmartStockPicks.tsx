@@ -21,8 +21,8 @@ export default function SmartStockPicks(props: { myStockDm: DataManager }) {
   let gridObj = useRef(null);
   const [gridData, setGridData] = useState(
     new DataManager({
-      // url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
-      url: 'http://localhost:62869/api/StockData',
+      url: 'https://ej2services.syncfusion.com/aspnet/development/api/StockData',
+      // url: 'http://localhost:62869/api/StockData',
       adaptor: new UrlAdaptor(),
       // offline: true,
     })
